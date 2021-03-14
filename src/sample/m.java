@@ -3,7 +3,7 @@ package sample;
 public class m {
 
     public static void main(String[] args) {
-        String l = "aaaa";
+        String l = "a";
 
         byte[][] binary = functions.wordtobinary(l);
         for(int i=0; i<l.length(); i++) {
@@ -34,12 +34,8 @@ public class m {
             System.out.println("");
         }
         System.out.println("Zmiana");
-        connect[1][0] = 1;
-        connect[2][0] = 1;
-        connect[2][1] = 0;
-        connect[3][0] = 1;
-        connect[3][1] = 0;
-        connect[3][2] = 0;
+        connect[0][13] = 0;
+        connect[0][0] = 1;
         for(int i=0; i<l.length(); i++) {
             for(int j=0;j<16;j++) {
                 System.out.print(connect[i][j]);
@@ -48,12 +44,14 @@ public class m {
         }
         System.out.println("MNOZENIE MACIERZY");
         byte[][] checked = functions.addParityBit(connect);
+
         for(int i=0; i<l.length(); i++) {
             for(int j=0;j<8;j++) {
                 System.out.print(checked[i][j]);
             }
             System.out.println("");
         }
+        System.out.println(functions.findError(checked));
 
     }
 }
