@@ -1,24 +1,26 @@
+package sample;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class functions {
     static byte[][] H = {
-            {1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
-            {1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-            {1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-            {0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-            {1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0},
-            {1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0},
-            {0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0},
-            {1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1}};
+            {1, 1, 1, 1, 0, 0, 0, 0,    1, 0, 0, 0, 0, 0, 0, 0},
+            {1, 1, 0, 0, 1, 1, 0, 0,    0, 1, 0, 0, 0, 0, 0, 0},
+            {1, 0, 1, 0, 1, 0, 1, 0,    0, 0, 1, 0, 0, 0, 0, 0},
+            {0, 1, 0, 1, 0, 1, 1, 0,    0, 0, 0, 1, 0, 0, 0, 0},
+            {1, 1, 1, 0, 1, 0, 0, 1,    0, 0, 0, 0, 1, 0, 0, 0},
+            {1, 0, 0, 1, 0, 1, 0, 1,    0, 0, 0, 0, 0, 1, 0, 0},
+            {0, 1, 1, 1, 1, 0, 1, 1,    0, 0, 0, 0, 0, 0, 1, 0},
+            {1, 1, 1, 0, 0, 1, 1, 1,    0, 0, 0, 0, 0, 0, 0, 1}};
 
 
     static byte[][] wordtobinary(String word) {
 
         byte[][] binary = new byte[word.length()][8];
         char letter, n;
-        String binarytext = "";
+        String binarytext;
 
         for (int i = 0; i < word.length(); i++) {
             letter = word.charAt(i);
@@ -44,8 +46,7 @@ public class functions {
         int result = 0;
         for (int letter = 0; letter < binary.length; letter++) {
             for (int i = 0; i < 8; i++) {
-                for (int j = 0; j < 8; j++) {
-                    //  System.out.println("binarnie: " +binary[letter][j] +" tablica: "+ H[i][j]);
+                for (int j = 0; j < binary[0].length; j++) {
                     result += binary[letter][j] * H[i][j];
 
                 }
@@ -68,43 +69,5 @@ public class functions {
             }
         }
         return connected;
-    }
-
-    static byte[][] check(byte[][] binary) {
-          byte[][] results ;
-//        int x = 0;
-//        for (int i = 0; i < code.length; i++) {
-//            for (int j = 0; j < 16; j++) {
-//                results[i][j] += code[i][j] * H[i][j];
-//            }
-////        }
-//        int result=0;
-//
-//        for (int letter = 0; letter < binary.length; letter++) {
-//            for (int i = 0; i < 8; i++) {
-//                for (int j = 0; j < 8; j++) {
-//                    System.out.println("binarnie: " +binary[letter][j] +" tablica: "+ H[i][j]);
-//                    result += binary[letter][j] * H[i][j];
-//
-//                }
-//                results[letter][i] = (byte)result;
-//                result = 0;
-//                System.out.println("end");
-//            }
-//        }
-
-        results=addParityBit(binary);
-        results=addParityBit(results);
-        int count=0;
-        for (int i=0; i< 8; i++) {
-            for (int j=0; j< results.length; j++) {
-                //if(H[j][i]==results[j][i]) count++;
-                System.out.println(H[j][i]);
-            }
-            if(count==8) System.out.println("blad");
-            count=0;
-        }
-
-        return results;
     }
 }
