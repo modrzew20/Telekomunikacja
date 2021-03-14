@@ -3,9 +3,9 @@ package sample;
 public class m {
 
     public static void main(String[] args) {
-        String l = "a";
+        String l = "abwadae3";
 
-        byte[][] binary = functions.wordtobinary(l);
+        byte[][] binary = functions.stringToBinary(l);
         for(int i=0; i<l.length(); i++) {
             for(int j=0;j<8;j++) {
                 System.out.print(binary[i][j]);
@@ -34,8 +34,8 @@ public class m {
             System.out.println("");
         }
         System.out.println("Zmiana");
-        connect[0][13] = 0;
-        connect[0][0] = 1;
+//        connect[0][13] = 0;
+//        connect[0][0] = 1;
         for(int i=0; i<l.length(); i++) {
             for(int j=0;j<16;j++) {
                 System.out.print(connect[i][j]);
@@ -52,6 +52,14 @@ public class m {
             System.out.println("");
         }
         System.out.println(functions.findError(checked));
+        byte[][] result = functions.disconnect(connect);
+        for(int i=0; i<l.length(); i++) {
+            for(int j=0;j<8;j++) {
+                System.out.print(result[i][j]);
+            }
+            System.out.println("");
+        }
+        System.out.println(functions.binaryToString(result));
 
     }
 }

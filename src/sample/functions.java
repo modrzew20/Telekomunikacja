@@ -16,7 +16,7 @@ public class functions {
             {1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1}};
 
 
-    static byte[][] wordtobinary(String word) {
+    static byte[][] stringToBinary(String word) {
 
         byte[][] binary = new byte[word.length()][8];
         char letter, n;
@@ -59,7 +59,6 @@ public class functions {
         return parityBits;
     }
 
-
     static byte[][] connect(byte[][] binary, byte[][] parityBits) {
         byte[][] connected = new byte[binary.length][16];
         for ( int i = 0; i < binary.length; i++ ) {
@@ -74,17 +73,16 @@ public class functions {
     static String findError(byte[][] binary) {
         byte[][] connected = new byte[binary.length][16];
 
-        String result = "", tmp;
+        StringBuilder result = new StringBuilder();
+        String tmp;
         for ( int letter = 0; letter < binary.length; letter++ ) {
             tmp = findErrorInOneLetter(binary[letter]);
             if (!tmp.equals("")) {
-                result = "Letter " + letter + ": " + tmp + "\n";
+                result.append("Letter ").append(letter).append(": ").append(tmp).append("\n");
                 tmp = "";
             }
         }
-
-
-        return result;
+        return result.toString();
     }
 
     /**
@@ -141,4 +139,29 @@ public class functions {
 
         return "";
     }
+
+    static byte[][] disconnect(byte[][] binary) {
+        byte[][] connected = new byte[binary.length][8];
+        for ( int i = 0; i < binary.length; i++ ) {
+            System.arraycopy(binary[i], 0, connected[i], 0, 8);
+        }
+        return connected;
+    }
+
+    static String binaryToString(byte[][] binary) {
+        char[] returnString = new char[binary.length];
+        for ( int i = 0; i < binary.length; i++ ) {
+            byte[] bytes = binary[i];
+            int base = 1;
+            int result = 0;
+            for ( int j = bytes.length - 1; j > 0; j-- ) {
+                result += bytes[j] * base;
+                base *= 2;
+            }
+            returnString[i] = (char) result;
+
+        }
+        return new String(returnString);
+    }
+
 }
