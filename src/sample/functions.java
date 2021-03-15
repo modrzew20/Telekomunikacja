@@ -70,13 +70,13 @@ public class functions {
         return connected;
     }
 
-    static String findError(byte[][] binary) {
-        byte[][] connected = new byte[binary.length][16];
+    static String findError(byte[][] checked, byte[][] binary) {
+        //byte[][] connected = new byte[checked.length][16];
 
         StringBuilder result = new StringBuilder();
         String tmp;
-        for ( int letter = 0; letter < binary.length; letter++ ) {
-            tmp = findErrorInOneLetter(binary[letter]);
+        for ( int letter = 0; letter < checked.length; letter++ ) {
+            tmp = findErrorInOneLetter(checked[letter], binary[letter]);
             if (!tmp.equals("")) {
                 result.append("Letter ").append(letter).append(": ").append(tmp).append("\n");
                 tmp = "";
@@ -90,12 +90,12 @@ public class functions {
      *               Returns string with information where was the error found
      *               returns empty string if there are no errors
      */
-    static private String findErrorInOneLetter(byte[] binary) {
+    static private String findErrorInOneLetter(byte[] checked, byte[] binary) {
         //Comparing result with columns, if column matches binary then the
         // error is on the place which is equivalent to the column number
         boolean isCorrect = false;
         boolean isRightColumn = false;
-        for ( byte b : binary ) {
+        for ( byte b : checked ) {
             isCorrect = true;
             if (b != 0) {
                 isCorrect = false;
@@ -105,14 +105,16 @@ public class functions {
         if (!isCorrect) {
             for ( int i = 0; i < H[0].length; i++ ) {
                 // kazda kolumna
-                for ( int j = 0; j < binary.length; j++ ) {
+                for ( int j = 0; j < checked.length; j++ ) {
                     isRightColumn = true;
-                    if (binary[j] != H[j][i]) {
+                    if (checked[j] != H[j][i]) {
                         isRightColumn = false;
                         break;
                     }
                 }
                 if (isRightColumn) {
+                    // Correcting error
+                    binary[i]= (byte) (binary[i] == 0 ? 1 : 0);
                     return "Single bit error found in bit " + i;
                 }
             }
@@ -120,14 +122,17 @@ public class functions {
             // Checking the sums of columns to see if 2 sums of columns equal our binary array
             for ( int i = 0; i < H[0].length; i++ ) {
                 for ( int j = i + 1; j < H[0].length; j++ ) {
-                    for ( int k = 0; k < binary.length; k++ ) {
+                    for ( int k = 0; k < checked.length; k++ ) {
                         isRightColumn = true;
-                        if (binary[k] != ((H[k][j] + H[k][i]) % 2)) {
+                        if (checked[k] != ((H[k][j] + H[k][i]) % 2)) {
                             isRightColumn = false;
                             break;
                         }
                     }
                     if (isRightColumn) {
+                        // Correcting error
+                        binary[i]= (byte) (binary[i] == 0 ? 1 : 0);
+                        binary[j]= (byte) (binary[j] == 0 ? 1 : 0);
                         return "Double bit error found in bits " + i + " and " + j;
                     }
 

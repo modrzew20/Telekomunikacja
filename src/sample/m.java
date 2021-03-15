@@ -51,7 +51,7 @@ public class m {
             }
             System.out.println("");
         }
-        System.out.println(functions.findError(checked));
+        System.out.println(functions.findError(checked, connect));
         byte[][] result = functions.disconnect(connect);
         for(int i=0; i<l.length(); i++) {
             for(int j=0;j<8;j++) {

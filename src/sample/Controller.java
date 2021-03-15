@@ -79,7 +79,9 @@ public class Controller {
                     binary[counter++] = nextLetter;
                 }
                 byte[][] checked = functions.addParityBit(binary);
-                infoTextArea.setText(functions.findError(checked));
+                byte[][] originalMessage = binary;
+                // TODO Jak chcesz wyswietlic oryginalna wiadomosc to musisz tutaj zachowac binary poniewaz findErorr od razu zmienia tablice
+                infoTextArea.setText(functions.findError(checked, binary));
                 resultTextArea.setText(functions.binaryToString(functions.disconnect(binary)));
 
             }
