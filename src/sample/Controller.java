@@ -2,13 +2,26 @@ package sample;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.TextArea;
-import javafx.stage.Stage;
 
+import javafx.scene.control.TextArea;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.scene.control.Button;
+
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.EventListener;
+import java.util.Scanner;
 
 public class Controller {
 
@@ -25,6 +38,24 @@ public class Controller {
 
     @FXML
     private TextArea infoTextArea;
+
+    @FXML
+    private TextArea originallyBitsTextArea;
+
+    @FXML
+    private Text originallySize;
+
+    @FXML
+    private Text afterSize;
+
+    @FXML
+    private Button save;
+
+    @FXML
+    private Button read;
+
+
+
 
     public Controller() {
         primaryStage = new Stage();
@@ -50,20 +81,67 @@ public class Controller {
     @FXML
     public void initialize() {
 
-        inputTextArea.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                byte[][] tmp = functions.stringToBinary(newValue);
-                tmp = functions.connect(functions.stringToBinary(newValue), functions.addParityBit(tmp));
-                StringBuilder sb = new StringBuilder();
-                for ( byte[] bytes : tmp ) {
-                    for ( int j = 0; j < tmp[0].length; j++ ) {
-                        sb.append(bytes[j]);
-                    }
+
+       save.setOnAction((EventHandler<ActionEvent>) actionEvent -> {
+           PrintWriter zapis = null;
+                                       try {
+                                           zapis = new PrintWriter("./kod.txt");
+                                       } catch (FileNotFoundException fileNotFoundException) {
+                                           fileNotFoundException.printStackTrace();
+                                       }
+                                       zapis.print(bitsTextArea.getText());
+                                       zapis.close();
+       });
+
+
+
+
+       read.setOnAction((EventHandler<ActionEvent>) actionEvent -> {
+
+           File file = new File("./kod.txt");
+                Scanner in = null;
+                try {
+                    in = new Scanner(file);
+                } catch (FileNotFoundException fileNotFoundException) {
+                    fileNotFoundException.printStackTrace();
                 }
-                bitsTextArea.setText(sb.toString());
-            }
-        });
+                String zdanie = in.nextLine();
+                bitsTextArea.setText(zdanie);
+
+       });
+
+
+                inputTextArea.textProperty().addListener(new ChangeListener<String>() {
+                    @Override
+                    public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
+                        byte[][] tmp = functions.stringToBinary(newValue);
+                        byte[][] originally = functions.stringToBinary(newValue);
+                        tmp = functions.connect(originally, functions.addParityBit(tmp));
+
+                        int size = 0;
+                        StringBuilder cb = new StringBuilder();
+                        for (byte[] bytes : originally) {
+                            for (int j = 0; j < originally[0].length; j++) {
+                                cb.append(bytes[j]);
+                                size++;
+                            }
+                        }
+                        originallyBitsTextArea.setText(cb.toString());
+                        originallySize.setText("Rozmiar oryginalny: " + size);
+
+                        size = 0;
+                        StringBuilder sb = new StringBuilder();
+                        for (byte[] bytes : tmp) {
+                            for (int j = 0; j < tmp[0].length; j++) {
+                                sb.append(bytes[j]);
+                                size++;
+                            }
+                        }
+                        bitsTextArea.setText(sb.toString());
+                        afterSize.setText("Rozmiar: " + size);
+
+                    }
+                });
 
         bitsTextArea.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -80,13 +158,11 @@ public class Controller {
                 }
                 byte[][] checked = functions.addParityBit(binary);
                 byte[][] originalMessage = binary;
-                // TODO Jak chcesz wyswietlic oryginalna wiadomosc to musisz tutaj zachowac binary poniewaz findErorr od razu zmienia tablice
                 infoTextArea.setText(functions.findError(checked, binary));
                 resultTextArea.setText(functions.binaryToString(functions.disconnect(binary)));
 
             }
         });
-
-
     }
+
 }
