@@ -15,7 +15,7 @@ public class functions {
             {0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0},
             {1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1}};
 
-
+// przekonwertowanie wiadomosci do słowa binarnego
     static byte[][] stringToBinary(String word) {
 
         byte[][] binary = new byte[word.length()][8];
@@ -41,6 +41,7 @@ public class functions {
         return binary;
     }
 
+    // dodanie bitów parzystosci
     static byte[][] addParityBit(byte[][] binary) {
         byte[][] parityBits = new byte[binary.length][8];
         int result = 0;
@@ -59,6 +60,7 @@ public class functions {
         return parityBits;
     }
 
+    //polacznie tablic z wiadomoscia i bitow parzystości
     static byte[][] connect(byte[][] binary, byte[][] parityBits) {
         byte[][] connected = new byte[binary.length][16];
         for ( int i = 0; i < binary.length; i++ ) {
@@ -70,6 +72,7 @@ public class functions {
         return connected;
     }
 
+    // szukanie bledu
     static String findError(byte[][] checked, byte[][] binary) {
         //byte[][] connected = new byte[checked.length][16];
 
@@ -152,7 +155,7 @@ public class functions {
         }
         return connected;
     }
-
+    // przekonwertowanie z tablicy z binarnymi slowami do Stringa
     static String binaryToString(byte[][] binary) {
         char[] returnString = new char[binary.length];
         for ( int i = 0; i < binary.length; i++ ) {
