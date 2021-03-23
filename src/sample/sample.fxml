@@ -34,7 +34,7 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bity" wrappingWidth="131.13671875" GridPane.columnIndex="2">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Wiadomosc z bitami parzystosci" wrappingWidth="250.13671875" GridPane.columnIndex="2">
          <font>
             <Font size="24.0" />
          </font>
@@ -54,9 +54,21 @@
          <font>
             <Font size="16.0" />
          </font></Text>
-
-      <Button fx:id="read" mnemonicParsing="false" text="Odczytaj z pliku" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-      <Button fx:id="save" mnemonicParsing="false" text="Zapisz do pliku" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+      <GridPane GridPane.columnIndex="3" GridPane.rowIndex="3">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints />
+        </rowConstraints>
+         <children>
+            <Button fx:id="save" mnemonicParsing="false" text="Zapisz pliki pośrednie" GridPane.columnIndex="1" />
+      
+                  <Button fx:id="read" mnemonicParsing="false" text="Odczytaj pliki posrednie" />
+         </children>
+      </GridPane>
+      <Button fx:id="wczytajwiadomosc" mnemonicParsing="false" text="Wczytaj wiadmosc" GridPane.rowIndex="3" />
    </children>
 
 </GridPane>

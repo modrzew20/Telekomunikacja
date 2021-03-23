@@ -11,10 +11,12 @@ import javafx.scene.Scene;
 
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -54,6 +56,9 @@ public class Controller {
     @FXML
     private Button read;
 
+    @FXML
+    private Button wczytajwiadomosc;
+
 
 
 
@@ -82,14 +87,44 @@ public class Controller {
     public void initialize() {
 
 
-       save.setOnAction((EventHandler<ActionEvent>) actionEvent -> {
+
+
+        wczytajwiadomosc.setOnAction((EventHandler<ActionEvent>) actionEvent -> {
+
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Resource File");
+            File f = fileChooser.showOpenDialog(primaryStage);
+
+            Scanner in = null;
+            try {
+                in = new Scanner(f);
+            } catch (FileNotFoundException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();
+            }
+            String zdanie = in.nextLine();
+            inputTextArea.setText(zdanie);
+        });
+
+
+
+
+
+        save.setOnAction((EventHandler<ActionEvent>) actionEvent -> {
            PrintWriter zapis = null;
                                        try {
-                                           zapis = new PrintWriter("./kod.txt");
+                                           zapis = new PrintWriter("./kod");
                                        } catch (FileNotFoundException fileNotFoundException) {
                                            fileNotFoundException.printStackTrace();
                                        }
                                        zapis.print(bitsTextArea.getText());
+                                       zapis.close();
+
+                                       try {
+                                           zapis = new PrintWriter("./orginalny");
+                                       } catch (FileNotFoundException fileNotFoundException) {
+                                           fileNotFoundException.printStackTrace();
+                                       }
+                                       zapis.print(originallyBitsTextArea.getText());
                                        zapis.close();
        });
 
@@ -98,7 +133,7 @@ public class Controller {
 
        read.setOnAction((EventHandler<ActionEvent>) actionEvent -> {
 
-           File file = new File("./kod.txt");
+           File file = new File("./kod");
                 Scanner in = null;
                 try {
                     in = new Scanner(file);
@@ -125,6 +160,7 @@ public class Controller {
                                 cb.append(bytes[j]);
                                 size++;
                             }
+
                         }
                         originallyBitsTextArea.setText(cb.toString());
                         originallySize.setText("Rozmiar oryginalny: " + size);
