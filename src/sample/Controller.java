@@ -140,7 +140,11 @@ public class Controller {
                 } catch (FileNotFoundException fileNotFoundException) {
                     fileNotFoundException.printStackTrace();
                 }
-                String zdanie = in.nextLine();
+                String zdanie="";
+                while(in.hasNext()) {
+                    zdanie += in.nextLine();
+                    zdanie+="\n";
+                }
                 bitsTextArea.setText(zdanie);
 
        });
@@ -160,6 +164,7 @@ public class Controller {
                                 cb.append(bytes[j]);
                                 size++;
                             }
+                            cb.append("\n");
 
                         }
                         originallyBitsTextArea.setText(cb.toString());
@@ -172,6 +177,7 @@ public class Controller {
                                 sb.append(bytes[j]);
                                 size++;
                             }
+                            sb.append("\n");
                         }
                         bitsTextArea.setText(sb.toString());
                         afterSize.setText("Rozmiar: " + size);
@@ -182,6 +188,8 @@ public class Controller {
         bitsTextArea.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
+
+                newValue=newValue.replaceAll("\n","");
                 byte[][] binary = new byte[newValue.length()/16][];
                 byte[] nextLetter;
                 int counter = 0;
@@ -192,6 +200,7 @@ public class Controller {
                     }
                     binary[counter++] = nextLetter;
                 }
+
                 byte[][] checked = functions.addParityBit(binary);
                 byte[][] originalMessage = binary;
                 infoTextArea.setText(functions.findError(checked, binary));
