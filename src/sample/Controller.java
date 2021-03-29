@@ -116,7 +116,7 @@ public class Controller {
                                        } catch (FileNotFoundException fileNotFoundException) {
                                            fileNotFoundException.printStackTrace();
                                        }
-                                       zapis.print(bitsTextArea.getText());
+                                       zapis.print(bitsTextArea.getText().replaceAll("\n",""));
                                        zapis.close();
 
                                        try {
@@ -124,7 +124,7 @@ public class Controller {
                                        } catch (FileNotFoundException fileNotFoundException) {
                                            fileNotFoundException.printStackTrace();
                                        }
-                                       zapis.print(originallyBitsTextArea.getText());
+                                       zapis.print(originallyBitsTextArea.getText().replaceAll("\n",""));
                                        zapis.close();
        });
 
@@ -140,11 +140,14 @@ public class Controller {
                 } catch (FileNotFoundException fileNotFoundException) {
                     fileNotFoundException.printStackTrace();
                 }
-                String zdanie="";
-                while(in.hasNext()) {
-                    zdanie += in.nextLine();
-                    zdanie+="\n";
-                }
+                String tmp = in.nextLine();
+                String zdanie = "";
+           for ( int i = 0; i < tmp.length()/16; i++ ) {
+               for ( int j = 0; j < 16; j++ ) {
+                   zdanie += tmp.charAt(i * 16 + j);
+               }
+               zdanie += "\n";
+           }
                 bitsTextArea.setText(zdanie);
 
        });
