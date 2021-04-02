@@ -126,7 +126,28 @@ public class Controller {
                                        }
                                        zapis.print(originallyBitsTextArea.getText().replaceAll("\n",""));
                                        zapis.close();
-       });
+
+                                       try {
+                                           zapis = new PrintWriter("./rezultat.txt");
+                                       } catch (FileNotFoundException e) {
+                                           e.printStackTrace();
+                                       }
+                                       String result=bitsTextArea.getText().replaceAll("\n","");
+                                        byte[][] binary = new byte[result.length()/8][];
+                                        byte[] nextLetter;
+                                        int counter = 0;
+                                        for ( int i = 0; i < result.length() - 7; i += 8 ) {
+                                            nextLetter = result.substring(i, i+8).getBytes();
+                                            for ( int j = 0; j < nextLetter.length; j++ ) {
+                                                nextLetter[j] -= 48;
+                                            }
+                                            binary[counter++] = nextLetter;
+                                        }
+                                        zapis.print(functions.binaryToString(binary));
+                                        zapis.close();
+
+
+        });
 
 
 
@@ -171,7 +192,7 @@ public class Controller {
 
                         }
                         originallyBitsTextArea.setText(cb.toString());
-                        originallySize.setText("Rozmiar oryginalny: " + size);
+                        originallySize.setText("Rozmiar oryginalny: " + size/8);
 
                         size = 0;
                         StringBuilder sb = new StringBuilder();
@@ -183,7 +204,7 @@ public class Controller {
                             sb.append("\n");
                         }
                         bitsTextArea.setText(sb.toString());
-                        afterSize.setText("Rozmiar: " + size);
+                        afterSize.setText("Rozmiar: " + size/8);
 
                     }
                 });

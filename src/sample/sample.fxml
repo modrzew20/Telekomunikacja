@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<GridPane alignment="center" hgap="10" prefHeight="600.0" prefWidth="1100.0" vgap="10" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane alignment="center" hgap="10" prefHeight="600.0" prefWidth="1100.0" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
 <padding><Insets bottom="10" left="25" right="25" top="25" /></padding>
    <columnConstraints>
       <ColumnConstraints maxWidth="294.0" minWidth="240.0" prefWidth="240.0" />
@@ -29,7 +33,7 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Rezultat" wrappingWidth="131.13671875" GridPane.columnIndex="3">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Rezultat" wrappingWidth="299.13671875" GridPane.columnIndex="3">
          <font>
             <Font size="24.0" />
          </font>
@@ -39,10 +43,10 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <TextArea fx:id="infoTextArea" prefHeight="115.0" prefWidth="988.0" GridPane.columnSpan="4" GridPane.rowIndex="4" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Wiadomość oryginalna " GridPane.columnIndex="1">
+      <TextArea fx:id="infoTextArea" prefHeight="112.0" prefWidth="742.0" GridPane.columnSpan="3" GridPane.rowIndex="4" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Wiadomość oryginalna " wrappingWidth="206.15234375" GridPane.columnIndex="1">
          <font>
-            <Font size="20.0" />
+            <Font size="24.0" />
          </font>
       </Text>
       <TextArea fx:id="originallyBitsTextArea" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
@@ -69,6 +73,11 @@
          </children>
       </GridPane>
       <Button fx:id="wczytajwiadomosc" mnemonicParsing="false" text="Wczytaj wiadmosc" GridPane.rowIndex="3" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Autorzy:                     Daniel Modrzejewski Michał Piotrowski" wrappingWidth="154.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
    </children>
 
 </GridPane>
