@@ -112,23 +112,15 @@ public class Controller {
         save.setOnAction((EventHandler<ActionEvent>) actionEvent -> {
            PrintWriter zapis = null;
                                        try {
-                                           zapis = new PrintWriter("./kod");
+                                           zapis = new PrintWriter("./dozmianybitow");
                                        } catch (FileNotFoundException fileNotFoundException) {
                                            fileNotFoundException.printStackTrace();
                                        }
-                                       zapis.print(bitsTextArea.getText().replaceAll("\n",""));
+                                       zapis.print(bitsTextArea.getText());
                                        zapis.close();
 
                                        try {
-                                           zapis = new PrintWriter("./orginalny");
-                                       } catch (FileNotFoundException fileNotFoundException) {
-                                           fileNotFoundException.printStackTrace();
-                                       }
-                                       zapis.print(originallyBitsTextArea.getText().replaceAll("\n",""));
-                                       zapis.close();
-
-                                       try {
-                                           zapis = new PrintWriter("./rezultat.txt");
+                                           zapis = new PrintWriter("./dwarazywiekszy.txt");
                                        } catch (FileNotFoundException e) {
                                            e.printStackTrace();
                                        }
@@ -154,22 +146,20 @@ public class Controller {
 
        read.setOnAction((EventHandler<ActionEvent>) actionEvent -> {
 
-           File file = new File("./kod");
-                Scanner in = null;
-                try {
-                    in = new Scanner(file);
-                } catch (FileNotFoundException fileNotFoundException) {
-                    fileNotFoundException.printStackTrace();
-                }
-                String tmp = in.nextLine();
-                String zdanie = "";
-           for ( int i = 0; i < tmp.length()/16; i++ ) {
-               for ( int j = 0; j < 16; j++ ) {
-                   zdanie += tmp.charAt(i * 16 + j);
-               }
-               zdanie += "\n";
+           File file = new File("./dozmianybitow");
+           Scanner in = null;
+           try {
+                in = new Scanner(file);
+           } catch (FileNotFoundException fileNotFoundException) {
+               fileNotFoundException.printStackTrace();
            }
-                bitsTextArea.setText(zdanie);
+           String zdanie = "";
+
+           while(in.hasNext()){
+                zdanie+=in.nextLine();
+                zdanie+="\n";
+           }
+           bitsTextArea.setText(zdanie);
 
        });
 
